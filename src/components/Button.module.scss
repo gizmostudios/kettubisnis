@@ -1,0 +1,17 @@
+@import '~styles/_variables';
+
+$color-button-text: palette('background');
+$color-button-background: palette('primary');
+
+.Button {
+  border: none;
+  border-radius: 0;
+  padding: spacing(2);
+  color: $color-button-text;
+  background: $color-button-background;
+  font-size: 1rem;
+}
+
+.Button + .Button {
+  margin-left: spacing(.5);
+}

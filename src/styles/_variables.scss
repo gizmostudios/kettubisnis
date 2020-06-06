@@ -1,0 +1,61 @@
+@function palette($colorName) {
+  $colors: (
+    "primary": #FA981D,
+    "secondary": #bbb,
+    "paper": #eee,
+    "text": #666,
+    "icon": #888,
+    "link": #666,
+    "background": #fff,
+    "shade": rgba(white, .5)
+  );
+
+  @return map-get($colors, $colorName);
+};
+
+@function spacing($number) {
+  @return #{($number * 10)}px
+}
+
+@function size($name) {
+  $sizes: (
+    "nav-height": spacing(6),
+    "footer-height": spacing(7),
+    "min-width": 360px
+  );
+  @return map-get($sizes, $name);
+}
+
+@function zIndex($index) {
+  $indexes: (
+    "navbar": 1000
+  );
+  @return map-get($indexes, $index);
+}
+
+.debug {
+  border: solid 1px red !important;
+}
+
+.backdrop {
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: palette(shade);
+    z-index: 2;
+  }
+}
+
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rounded {
+  border-radius: 99em;
+}

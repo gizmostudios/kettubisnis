@@ -1,0 +1,51 @@
+@import '~styles/_variables';
+
+$font-path: '/fonts';
+
+@font-face {
+  font-family: 'eurofurence_regular';
+  src: url('#{$font-path}/eurof55-webfont.woff2') format('woff2'),
+       url('#{$font-path}/eurof55-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'eurofurence_lightregular';
+  src: url('#{$font-path}/eurof35-webfont.woff2') format('woff2'),
+       url('#{$font-path}/eurof35-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input:focus, button:focus {
+  outline:none;
+}
+
+html {
+  font-size: 20px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'eurofurence_lightregular';
+  margin: 0;
+  margin-bottom: size('footer-height');
+  overflow-x: hidden;
+  
+  &.noscroll {
+    overflow: hidden;
+  }
+
+  &.desktop {
+    margin-bottom: 0;
+  }
+}
+
+a,button,h1,h2,h3,h4,h5,h6 {
+  font-family: 'eurofurence_regular';
+}

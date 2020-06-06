@@ -3,11 +3,12 @@
     "primary": #FA981D,
     "secondary": #bbb,
     "paper": #eee,
-    "text": #666,
+    "text": #333,
     "icon": #888,
     "link": #666,
     "background": #fff,
-    "shade": rgba(white, .5)
+    "shade": rgba(#aaa, .5),
+    "overlay": rgba(white, .5)
   );
 
   @return map-get($colors, $colorName);
@@ -45,7 +46,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: palette(shade);
+    background: palette('overlay');
     z-index: 2;
   }
 }

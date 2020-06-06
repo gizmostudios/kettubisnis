@@ -1,7 +1,11 @@
 @import '~styles/_variables';
 
 $color-button-text: palette('background');
-$color-button-background: palette('primary');
+$color-button-background: palette('secondary');
+$color-button-hover: palette('primary');
+$color-shadow: palette('shade');
+
+$transition-duration: .15s;
 
 .Button {
   border: none;
@@ -10,8 +14,18 @@ $color-button-background: palette('primary');
   color: $color-button-text;
   background: $color-button-background;
   font-size: 1rem;
+  cursor: pointer;
+  transition: transform $transition-duration ease-out,
+              box-shadow $transition-duration ease-out,
+              background $transition-duration ease-out;
+
+  &:hover {
+    background: $color-button-hover;
+    transform: translate(0, -3px);
+    box-shadow: 0 3px 0 $color-shadow;
+  }
 }
 
 .Button + .Button {
-  margin-left: spacing(.5);
+  margin-left: spacing(.3);
 }

@@ -27,7 +27,7 @@ input:focus, button:focus {
 }
 
 html {
-  font-size: 20px;
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
@@ -48,4 +48,10 @@ body {
 
 a,button,h1,h2,h3,h4,h5,h6 {
   font-family: 'eurofurence_regular';
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+p {
+  letter-spacing: 2px;
 }

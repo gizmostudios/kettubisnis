@@ -45,7 +45,7 @@ const Video = (props) => {
   }, [paused]);
   
   return (
-    <div className={styles.root}>
+    <div className={cx(styles.root, breakpoints.desktop && styles.desktop)}>
       <div
         className={cx(styles.player, breakpoints.desktop && styles.desktop)}
         >

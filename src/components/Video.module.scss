@@ -2,58 +2,40 @@
 @import '~styles/_animations';
 
 $color-icon: palette("background");
+$color-background: palette("background");
 $color-icon-background: palette("secondary");
 $color-hover: palette("primary");
-$color-shade: palette("shade");
 
 .root {
   position: relative;
-  // height: 100vh;
+
+  &.desktop {
+  }
 }
 
 .player {
   position: relative;
   height: 100%;
-  
-  &.desktop {
-    margin: 0 spacing(1);
-
-    &:last-child {
-      padding-right: spacing(2);
-    }
-  }
 }
 
 .Videos {
   &.desktop {
     display: flex;
-    width: 100vw;
-    height: calc(100vh - 151px);
+    width: calc(100vw - #{spacing(2)});
+    height: calc(100vh - 170px);
     overflow-y: hidden;
     overflow-x: auto;
+    margin: 0 spacing(1);
+    // @extend .debug;
   }
 }
 
 .Video {
-  width: 100%;
-  height: auto;
-  min-width: auto;
-  min-height: auto;
-  position: static;
-  transform: none;
+  flex: none;
 
   &.desktop {
-    width: auto;
-    height: auto;
-    // min-width: 100%;
-    min-height: calc(100% - #{spacing(2)});
-    max-width: calc(100vw - #{spacing(4)});
-    max-height: calc(100vh - #{spacing(17)});
-    // position: absolute;
-    // left: 50%;
-    // top: 50%;
-    // transform: translate(-50%, -50%);
-    z-index: 1;
+    width: calc(100vw - #{spacing(4)});
+    margin: 0 spacing(1);
   }
 }
 
@@ -83,7 +65,7 @@ $color-shade: palette("shade");
   top: 50%;
   transform: translate(0, -50%);
   z-index: 3;
-  background: palette('background');
+  background: $color-icon;
   padding: spacing(2);
   cursor: pointer;
 
@@ -116,7 +98,7 @@ $color-shade: palette("shade");
     margin: spacing(4) 0;
     padding: spacing(2);
     width: size('min-width');
-    background: palette('background');
+    background: $color-background;
     -moz-user-select: none;
     -webkit-user-select: none;
     cursor: pointer;

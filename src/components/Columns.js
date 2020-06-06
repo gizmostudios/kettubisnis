@@ -21,7 +21,6 @@ const Columns = (props) => {
 
   const breakpoints = useBreakpoint();
   const [isDesktop, setIsDesktop] = useState(breakpoints.desktop);
-  const abortController = new AbortController();
 
   useEffect(() => {
     if(breakpoints.desktop) {
@@ -30,9 +29,7 @@ const Columns = (props) => {
       setIsDesktop(false);
     }
 
-    return () => {
-      abortController.abort();
-    }
+    return () => {}
   }, [breakpoints]);
 
   return (

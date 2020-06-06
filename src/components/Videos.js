@@ -16,7 +16,6 @@ const Video = (props) => {
   const [paused, setPaused] = useState(true);
   const [showDescription, setShowDescription] = useState(false);
   const [src, setSrc] = useState(props.src_sd); //@TODO: make SD/HD switch
-  const abortController = new AbortController();
 
   // constants
   const videoPath = `/videos`;
@@ -42,9 +41,7 @@ const Video = (props) => {
     }
 
     props[paused ? 'onPause' : 'onPlay'](props.index);
-    return () => {
-      abortController.abort();
-    }
+    return () => {}
   }, [paused]);
   
   return (
@@ -116,7 +113,6 @@ const Videos = (props) => {
   const [currentVideoId, setCurrentVideoId] = useState(props.currentVideoId);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoLength = props.videoData.videos.length;
-  const abortController = new AbortController();
 
   const handlePrevClick = () => {
     setCurrentVideoId(currentVideoId > 1 ? currentVideoId - 1 : videoLength);
@@ -129,9 +125,7 @@ const Videos = (props) => {
     document.getElementById(`video-${currentVideoId}`).scrollIntoView({
       behavior: 'smooth'
     });
-    return () => {
-      abortController.abort();
-    };
+    return () => {};
   }, [currentVideoId]);
   
   useEffect(() => {

@@ -41,7 +41,6 @@ const Footer = (props) => {
 
   const [showGrid, setShowGrid] = useState(false);
   const [showHome, setShowHome] = useState(false);
-  const abortController = new AbortController();
 
   const handleHomeClick = () => {
     window.scroll({

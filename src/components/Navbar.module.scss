@@ -90,6 +90,7 @@ $color-icon: palette("icon");
   background: $color-background;
   transition: transform .3s ease-in-out;
   transform-origin: center center;
+  cursor: pointer;
   // @extend .debug;
 
   > span {

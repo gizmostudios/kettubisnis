@@ -6,35 +6,42 @@ $color-background: palette("background");
 $color-icon-background: palette("secondary");
 $color-hover: palette("primary");
 
-.root {
-  position: relative;
-
-  &.desktop {
-  }
-}
-
-.player {
-  position: relative;
-  height: 100%;
-}
-
 .Videos {
   &.desktop {
     display: flex;
+    align-items: center;
     width: calc(100vw - #{spacing(2)});
     height: calc(100vh - 170px);
     overflow-y: hidden;
     overflow-x: auto;
     margin: 0 spacing(1);
+    scroll-snap-type: x mandatory;
     // @extend .debug;
   }
 }
 
+.root {
+  position: relative;
+
+  &.desktop {
+    display: flex;
+    align-items: center;
+    max-height: calc(100vh - #{spacing(13)});
+    scroll-snap-align: start;
+  }
+}
+
+.player {
+  position: relative;
+}
+
 .Video {
   flex: none;
+  width: 100%;
 
   &.desktop {
     width: calc(100vw - #{spacing(4)});
+    max-height: 100%;
     margin: 0 spacing(1);
   }
 }

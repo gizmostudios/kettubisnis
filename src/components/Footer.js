@@ -12,19 +12,17 @@ const Thumbnail = (props) => {
   // constants
   const path = `/videos/posters`;
   const breakpoints = useBreakpoint();
-  const [maxChar, setMaxChar] = useState(0);
+  const maxChar = 100;
 
-  useEffect(() => {
-    if(breakpoints.xs) setMaxChar(10);
-    if(breakpoints.sm) setMaxChar(20);
-    if(breakpoints.md) setMaxChar(30);
-    if(breakpoints.lg) setMaxChar(999);
-
-    return () => {};
-  }, [breakpoints])
+  const handleClick = () => {
+    props.onClick(props.index);
+  }
 
   return (
-    <div className={`${styles.Thumbnail} ${breakpoints.desktop && styles.desktop}`}>
+    <div
+      className={`${styles.Thumbnail} ${breakpoints.desktop && styles.desktop}`}
+      onClick={handleClick}
+    >
       <img src={`${path}/${props.poster}`} />
       <h3 className={styles.thumbTitle}>
         {props.title.length < maxChar
@@ -43,6 +41,7 @@ const Footer = (props) => {
 
   const [showGrid, setShowGrid] = useState(false);
   const [showHome, setShowHome] = useState(false);
+  const abortController = new AbortController();
 
   const handleHomeClick = () => {
     window.scroll({
@@ -52,22 +51,35 @@ const Footer = (props) => {
     });
   }
 
-  
-  const checkScroll = () => {
-    if(!showHome && window.scrollY > 100) {
-      setShowHome(true);
-    }
-    
-    if(showHome && window.scrollY <= 100) {
-      setShowHome(false);
-    }
+  const handleVideoClick = (videoId) => {
+    props.onVideoSelect(videoId);
+    setShowHome(false);
+    setShowGrid(false);
   }
   
-  window.removeEventListener('scroll', checkScroll); //never have multiple listeners
-  window.addEventListener('scroll', checkScroll);
+  useEffect(() => {
+    const checkScroll = () => {
+      if(!showHome && window.scrollY > 100) {
+        setShowHome(true);
+      }
+      
+      if(showHome && window.scrollY <= 100) {
+        setShowHome(false);
+      }
+    }
+
+    window.addEventListener('scroll', checkScroll);
+    return () => window.removeEventListener('scroll', checkScroll);
+  }, [showHome]);
+
 
   useEffect(() => {
     document.body.classList[showGrid ? 'add' : 'remove']('noscroll');
+
+    return () => {
+
+      abortController.abort();
+    };
   }, [showGrid])
 
   return (
@@ -96,6 +108,7 @@ const Footer = (props) => {
                 <Thumbnail
                   key={index}
                   index={index + 1}
+                  onClick={(videoId) => handleVideoClick(videoId)}
                   {...videoData}
                 />
               )

@@ -20,7 +20,7 @@ const Layout = (props) => {
 
       <header>
         <Navbar
-          logo={'/images/kettulogo.png'}
+          logo={'/images/kettulogo.svg'}
           items={[{
             title: {
               name: 'home',

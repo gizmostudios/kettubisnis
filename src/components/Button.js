@@ -3,9 +3,9 @@ import styles from './Button.module.scss';
 
 const Button = (props) => {
   return (
-    <button className={ styles.Button } {...props}>
+    <a className={ styles.Button } {...props}>
       {props.children || props.title || null}
-    </button>
+    </a>
   )
 }
 

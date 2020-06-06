@@ -67,8 +67,10 @@ footer {
 }
 
 .Thumbnail {
+  position: relative;
   margin: spacing(1);
   width: calc(50% - #{spacing(2)});
+  cursor: pointer;
   // @extend .debug;
   
   &.desktop {
@@ -77,7 +79,17 @@ footer {
 
   img {
     max-width: 100%;
-    // width: size('min-width');
-    // height: #{size('min-width')/1.76};
+  }
+
+  @extend .backdrop;
+
+  &:before {
+    transition: opacity .2s ease;
+  }
+
+  &:hover {
+    &:before {
+      opacity: 0;
+    }
   }
 }

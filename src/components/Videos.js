@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
-import styles from './Video.module.scss'
+import React, { useState, useRef, useEffect } from 'react';
+import styles from './Videos.module.scss';
 import cx from 'classnames';
 
 // components
@@ -15,8 +15,9 @@ const Video = (props) => {
   const breakpoints = useBreakpoint();
   const [paused, setPaused] = useState(true);
   const [showDescription, setShowDescription] = useState(false);
-  const [src, setSrc] = useState(props.src_sd);
-  
+  const [src, setSrc] = useState(props.src_sd); //@TODO: make SD/HD switch
+  const abortController = new AbortController();
+
   // constants
   const videoPath = `/videos`;
   const posterPath = `/videos/posters`;
@@ -28,7 +29,6 @@ const Video = (props) => {
   const handleVideoClick = () => {
     setPaused(!paused);
   }
-
   
   useEffect(() => {
     vidRef.current[paused ? 'pause' : 'play']();
@@ -40,12 +40,18 @@ const Video = (props) => {
         console.log(e);
       }
     }
-    
-    return () => {};
+
+    props[paused ? 'onPause' : 'onPlay'](props.index);
+    return () => {
+      abortController.abort();
+    }
   }, [paused]);
   
   return (
-    <div className={cx(styles.root, breakpoints.desktop && styles.desktop)}>
+    <div
+      className={cx(styles.root, breakpoints.desktop && styles.desktop)}
+      id={props.id || false}
+    >
       <div
         className={cx(styles.player, breakpoints.desktop && styles.desktop)}
         >
@@ -107,21 +113,59 @@ const Video = (props) => {
 const Videos = (props) => {
   
   const breakpoints = useBreakpoint();
-  // const [isDesktop, setIsDesktop] = useState(breakpoints.desktop);
+  const [currentVideoId, setCurrentVideoId] = useState(props.currentVideoId);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoLength = props.videoData.videos.length;
+  const abortController = new AbortController();
 
-  const handlePrevClick = () => {}
-  const handleNextClick = () => {}
+  const handlePrevClick = () => {
+    setCurrentVideoId(currentVideoId > 1 ? currentVideoId - 1 : videoLength);
+  }
+  const handleNextClick = () => {
+    setCurrentVideoId(currentVideoId < videoLength ? currentVideoId + 1 : 1);
+  }
 
-  // useEffect(() => {
-  //   setIsDesktop(breakpoints.desktop);
-  // }, [breakpoints])
+  useEffect(() => {
+    document.getElementById(`video-${currentVideoId}`).scrollIntoView({
+      behavior: 'smooth'
+    });
+    return () => {
+      abortController.abort();
+    };
+  }, [currentVideoId]);
+  
+  useEffect(() => {
+    setCurrentVideoId(props.currentVideoId);
+    return () => {
+      abortController.abort();
+    };
+  }, [props.currentVideoId]);
   
   return (
     <>
       <div className={ `${styles.Videos} ${breakpoints.desktop && styles.desktop}` }>
-        {props.children}
+        {
+          props.videoData.videos.map((videoData, index) => {
+            return (
+              <Video
+                key={index}
+                id={`video-${index + 1}`}
+                index={index + 1}
+                onPlay={(videoId) => {
+                  setIsPlaying(true);
+                  setCurrentVideoId(videoId);
+                }}
+                onPause={(videoId) => {
+                  setIsPlaying(false);
+                  setCurrentVideoId(videoId);
+                }}
+                {...videoData}
+              />
+            )
+          })
+        }
       </div>
-      {breakpoints.desktop && (
+      {breakpoints.desktop && !isPlaying && (
         <>
           <div
             onClick={() => handlePrevClick()}
@@ -143,7 +187,7 @@ const Videos = (props) => {
   )
 }
 
-export default Video;
+export default Videos;
 
 export {
   Video,

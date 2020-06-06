@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '~components/Layout';
-import {Videos, Video} from '~components/Video';
+import Videos from '~components/Videos';
 import Footer from '~components/Footer';
 
 import videoData from '~data/videoData.json';
 
 const Home = () => {
 
+  const [currentVideoId, setCurrentVideoId] = useState(1);
+
   return (
     <Layout>
-      <Videos>
-        {videoData.videos.map((videoData, index) => {
-          return (
-            <Video
-              key={index}
-              index={index + 1}
-              {...videoData}
-            />
-          )
-        })}
-      </Videos>
+      <Videos
+        videoData={videoData}
+        currentVideoId={currentVideoId}
+      />
       <Footer
         videoData={videoData}
+        onVideoSelect={(selectedVideoId) => {
+          setCurrentVideoId(selectedVideoId);
+        }}
       />
     </Layout>
   )

@@ -8,6 +8,8 @@ $color-shadow: palette('shade');
 $transition-duration: .15s;
 
 .Button {
+  display: block;
+  max-width: size('min-width');
   border: none;
   border-radius: 0;
   padding: spacing(2);
@@ -27,5 +29,5 @@ $transition-duration: .15s;
 }
 
 .Button + .Button {
-  margin-left: spacing(.3);
+  margin-top: spacing(.5);
 }

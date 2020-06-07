@@ -8,18 +8,31 @@ import videoData from '~data/videoData.json';
 const Home = () => {
 
   const [currentVideoId, setCurrentVideoId] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <Layout>
+    <Layout
+      fullScreen={isPlaying}
+    >
       <Videos
         videoData={videoData}
         currentVideoId={currentVideoId}
+        onPlay={(currentVideoId) => {
+          setCurrentVideoId(currentVideoId);
+          setIsPlaying(true);
+          document.body.classList.add('noscroll', 'playing');
+        }}
+        onPause={() => {
+          setIsPlaying(false);
+          document.body.classList.remove('noscroll', 'playing');
+        }}
       />
       <Footer
         videoData={videoData}
         onVideoSelect={(selectedVideoId) => {
           setCurrentVideoId(selectedVideoId);
         }}
+        hide={isPlaying}
       />
     </Layout>
   )

@@ -5,6 +5,7 @@ $color-icon: palette("background");
 $color-background: palette("background");
 $color-icon-background: palette("secondary");
 $color-hover: palette("primary");
+$color-shadow: palette("shadow");
 
 .Videos {
   &.desktop {
@@ -16,6 +17,14 @@ $color-hover: palette("primary");
     overflow-x: auto;
     margin: 0 spacing(1);
     scroll-snap-type: x mandatory;
+    transition: height ani(duration) ease, transform ani(duration) ease;
+
+    &.fullscreen {
+      height: 100vh;
+      transform: translate(0, -80px);
+      // margin-top: spacing(-2);
+      overflow: hidden;
+    }
     // @extend .debug;
   }
 }
@@ -28,6 +37,12 @@ $color-hover: palette("primary");
     align-items: center;
     max-height: calc(100vh - #{spacing(13)});
     scroll-snap-align: start;
+    transition: max-height ani("duration") ease;
+
+    &.fullscreen {
+      max-width: none;
+      max-height: 100vh;
+    }
   }
 }
 
@@ -38,12 +53,19 @@ $color-hover: palette("primary");
 .Video {
   flex: none;
   width: 100%;
+  transition: height ani("duration") ease;
 
   &.desktop {
     width: calc(100vw - #{spacing(4)});
-    max-height: 100%;
     margin: 0 spacing(1);
+
+    &.fullscreen {
+      margin: 0;
+      width: calc(100vw - #{spacing(2)});
+      height: calc(100vh - #{spacing(2)});
+    }
   }
+
 }
 
 .playButton {
@@ -74,6 +96,8 @@ $color-hover: palette("primary");
   z-index: 3;
   background: $color-icon;
   padding: spacing(2);
+  box-shadow: 0 10px 0 $color-shadow;
+  
   cursor: pointer;
 
   &:hover {
@@ -109,6 +133,7 @@ $color-hover: palette("primary");
     -moz-user-select: none;
     -webkit-user-select: none;
     cursor: pointer;
+    box-shadow: 0 10px 0 $color-shadow;
 
     &:hover {
       svg {
@@ -146,7 +171,7 @@ $color-hover: palette("primary");
 
   &.desktop {
     .description {
-      transition: max-height .3s ease-in-out, margin-top .3s ease-in-out;
+      transition: max-height ani("duration") ease-in-out, margin-top ani("duration") ease-in-out;
       max-height: 0;
       overflow: hidden;
       margin: 0;

@@ -8,6 +8,7 @@
     "link": #666,
     "background": #fff,
     "shade": rgba(#aaa, .5),
+    "shadow": rgba(#000, .2),
     "overlay": rgba(white, .5)
   );
 
@@ -32,6 +33,13 @@
     "navbar": 1000
   );
   @return map-get($indexes, $index);
+}
+
+@function ani($param) {
+  $params: (
+    "duration": .5s
+  );
+  @return map-get($params, $param);
 }
 
 .debug {

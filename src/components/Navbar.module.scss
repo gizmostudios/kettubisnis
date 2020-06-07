@@ -14,18 +14,30 @@ $color-icon: palette("icon");
 
 .root {
   position: relative;
-  border-bottom: solid 1px $color-border;
   margin-bottom: spacing(2);
-  z-index: zIndex('navbar');
+  z-index: zIndex(navbar);
   // @extend .debug;
 }
 
 .navbar {
   height: size('nav-height');
   padding: 0 spacing(2);
+  border-bottom: solid 1px $color-border;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  // transition: height ani("duration") ease, padding ani("duration") ease;
+  transition: transform ani(duration) ease, background ani(duration)*2 ani(duration) linear;
+  background: $color-background;
+
+  &.hide {
+    overflow: hidden;
+    // height: 0;
+    // padding-top: 0;
+    // padding-bottom: 0;
+    border: none;
+    transform: translate(0, -100%);
+  }
 }
 
 .brand {
@@ -72,7 +84,7 @@ $color-icon: palette("icon");
       left: 0;
       bottom: -2px;
       border-bottom: solid 2px $color-link-active-border;
-      animation: scaleHorizontal .3s ease-out forwards;
+      animation: scaleHorizontal ani("duration") ease-out forwards;
     }
   }
 }
@@ -88,7 +100,7 @@ $color-icon: palette("icon");
   padding: 0;
   border: none;
   background: $color-background;
-  transition: transform .3s ease-in-out;
+  transition: transform ani("duration") ease-in-out;
   transform-origin: center center;
   cursor: pointer;
   // @extend .debug;
@@ -98,7 +110,7 @@ $color-icon: palette("icon");
     width: spacing(2);
     margin: spacing(0.5) spacing(1);
     border-bottom: solid 1px $color-icon;
-    transition: transform .3s .15s ease-in-out;
+    transition: transform ani("duration") .15s ease-in-out;
 
     &:nth-child(1) {
       transform-origin: top left;
@@ -139,7 +151,7 @@ $color-icon: palette("icon");
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: height .3s ease-in-out, opacity .2s linear;
+  transition: height ani("duration") ease-in-out, opacity .2s linear;
 
   .item {
     margin: spacing(1) 0;

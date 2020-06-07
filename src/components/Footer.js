@@ -6,6 +6,7 @@ import Icon from '~components/Icon';
 
 // Helpers
 import {useBreakpoint} from '~helpers/Breakpoint';
+import If from '~helpers/If';
 
 const Thumbnail = (props) => {
 
@@ -75,19 +76,22 @@ const Footer = (props) => {
   useEffect(() => {
     document.body.classList[showGrid ? 'add' : 'remove']('noscroll');
 
-    return () => {
-
-      abortController.abort();
-    };
+    return () => {};
   }, [showGrid])
 
   return (
-    <footer className={`${styles.footer} ${showGrid && styles.showGrid}`}>
-      <header className={ styles.header }>
+    <footer className={`
+      ${styles.footer}
+      ${If(showGrid, styles.showGrid)}
+      ${If(props.hide, styles.hide)}
+    `}>
+      <header
+        className={ styles.header }
+        onClick={() => setShowGrid(!showGrid)}
+      >
         <Icon
           name={showGrid ? 'close' : 'grid'}
           className={ styles.icon } 
-          onClick={() => setShowGrid(!showGrid)}
         />
 
         {!showGrid && showHome && (

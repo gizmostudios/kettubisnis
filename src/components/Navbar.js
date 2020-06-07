@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styles from './Navbar.module.scss';
 import { Link } from "gatsby";
 import cx from 'classnames';
+import If from '~helpers/If';
 
 // components
 import Icon from '~components/Icon';
@@ -62,8 +63,11 @@ const Navbar = (props) => {
   
 
   return (
-    <div className={styles.root}>
-      <div className={styles.navbar}>
+    <div className={`${styles.root}`}>
+      <div className={`
+        ${styles.navbar}
+        ${If(props.hide, styles.hide)}`}
+      >
         {breakpoints['desktop'] && <div className={styles.items}>{items}</div>}
 
         <Link

@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet';
 import {BreakpointProvider} from '~helpers/Breakpoint';
 
 const Layout = (props) => {
-
   
   return (
     <BreakpointProvider>
@@ -25,6 +24,7 @@ const Layout = (props) => {
       <header>
         <Navbar
           logo={'/images/kettulogo.svg'}
+          hide={props.fullScreen}
           items={[{
             title: {
               name: 'home',

@@ -34,8 +34,10 @@ html {
 body {
   font-family: 'eurofurence_lightregular';
   margin: 0;
+  padding: 0;
   margin-bottom: size('footer-height');
   overflow-x: hidden;
+  transition: background ani("duration") ease;
   
   &.noscroll {
     overflow: hidden;
@@ -43,6 +45,13 @@ body {
 
   &.desktop {
     margin-bottom: 0;
+
+  }
+
+  &.playing {
+    overflow: hidden;
+    background: black;
+    cursor: none;
   }
 }
 

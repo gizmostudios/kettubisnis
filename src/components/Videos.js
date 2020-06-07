@@ -7,7 +7,7 @@ import Icon from '~components/Icon';
 
 // helpers
 import {useBreakpoint} from '~helpers/Breakpoint';
-
+import If from '~helpers/If';
 
 const Video = (props) => {
   
@@ -17,21 +17,27 @@ const Video = (props) => {
   const [showDescription, setShowDescription] = useState(false);
   const [src, setSrc] = useState(props.src_sd); //@TODO: make SD/HD switch
 
+  // GlobalStore.on('playVideo', (videoId) => {
+  //   console.log(videoId);
+  // });
+
   // constants
   const videoPath = `/videos`;
   const posterPath = `/videos/posters`;
 
   const handlePlayClick = (newPlayState) => {
     setPaused(!newPlayState || !paused);
+    props.onPlay(props.index);
   }
 
   const handleVideoClick = () => {
     setPaused(!paused);
+    props.onPause(props.index);
   }
-  
+
   useEffect(() => {
     vidRef.current[paused ? 'pause' : 'play']();
-    
+
     if(!paused && breakpoints.mobile) {
       try {
         vidRef.current.requestFullscreen();
@@ -39,21 +45,29 @@ const Video = (props) => {
         console.log(e);
       }
     }
-
-    props[paused ? 'onPause' : 'onPlay'](props.index);
+    
     return () => {}
   }, [paused]);
   
   return (
     <div
-      className={cx(styles.root, breakpoints.desktop && styles.desktop)}
+      className={cx(
+        styles.root,
+        If(breakpoints.desktop, styles.desktop),
+        If(!paused, styles.fullscreen))}
       id={props.id || false}
     >
       <div
         className={cx(styles.player, breakpoints.desktop && styles.desktop)}
         >
         <video
-          className={ cx(styles.Video, breakpoints.desktop && styles.desktop) }
+          className={
+            cx(
+              styles.Video,
+              If(breakpoints.desktop, styles.desktop),
+              If(!paused, styles.fullscreen)
+            )
+          }
           controls={props.controls || false}
           preload={props.preload || 'none'}
           onClick={() => handleVideoClick()}
@@ -109,6 +123,7 @@ const Video = (props) => {
 
 const Videos = (props) => {
   
+  const VideosRef = useRef();
   const breakpoints = useBreakpoint();
   const [currentVideoId, setCurrentVideoId] = useState(props.currentVideoId);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -125,19 +140,24 @@ const Videos = (props) => {
     document.getElementById(`video-${currentVideoId}`).scrollIntoView({
       behavior: 'smooth'
     });
+
     return () => {};
   }, [currentVideoId]);
   
   useEffect(() => {
     setCurrentVideoId(props.currentVideoId);
-    return () => {
-      abortController.abort();
-    };
+    return () => {};
   }, [props.currentVideoId]);
   
   return (
     <>
-      <div className={ `${styles.Videos} ${breakpoints.desktop && styles.desktop}` }>
+      <div className={cx(
+          styles.Videos,
+          If(breakpoints.desktop, styles.desktop),
+          If(isPlaying, styles.fullscreen)
+        )}
+        ref={VideosRef}
+      >
         {
           props.videoData.videos.map((videoData, index) => {
             return (
@@ -148,10 +168,12 @@ const Videos = (props) => {
                 onPlay={(videoId) => {
                   setIsPlaying(true);
                   setCurrentVideoId(videoId);
+                  props.onPlay(videoId);
                 }}
                 onPause={(videoId) => {
                   setIsPlaying(false);
                   setCurrentVideoId(videoId);
+                  props.onPause(videoId);
                 }}
                 {...videoData}
               />

@@ -21,7 +21,7 @@ footer {
   background: $color-background;
   z-index: zIndex(navbar);
 
-  transition: transform ani("duration") ease;
+  transition: transform ani("duration") ease, background ani("duration") ease;
   transform: translate(0, 0);
 
   &.showGrid {

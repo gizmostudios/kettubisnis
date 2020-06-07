@@ -27,7 +27,7 @@ $color-icon: palette("icon");
   align-items: center;
   justify-content: space-between;
   // transition: height ani("duration") ease, padding ani("duration") ease;
-  transition: transform ani(duration) ease, background ani(duration)*2 ani(duration) ease;
+  transition: transform ani(duration) ease, background ani(duration)*2 ease;
   background: $color-background;
 
   &.hide {

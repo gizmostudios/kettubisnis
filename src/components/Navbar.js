@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import styles from './Navbar.module.scss';
 import { Link } from "gatsby";
 import cx from 'classnames';
-import If from '~helpers/If';
 
 // components
 import Icon from '~components/Icon';
 
 // Helpers
 import {useBreakpoint} from '~helpers/Breakpoint';
+import If from '~helpers/If';
 
 const NavItems = (props) => {
   const breakpoints = useBreakpoint();
@@ -63,7 +63,10 @@ const Navbar = (props) => {
   
 
   return (
-    <div className={`${styles.root}`}>
+    <div className={`
+      ${styles.root}
+      ${If(dropdownVisible, styles.show)}
+    `}>
       <div className={`
         ${styles.navbar}
         ${If(props.hide, styles.hide)}`}

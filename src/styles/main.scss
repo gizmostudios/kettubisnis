@@ -1,6 +1,8 @@
 @import '~styles/_variables';
 
 $font-path: '/fonts';
+$color-background: palette("background");
+$color-background-playing: black;
 
 @font-face {
   font-family: 'eurofurence_regular';
@@ -36,22 +38,23 @@ body {
   margin: 0;
   padding: 0;
   margin-bottom: size('footer-height');
-  overflow-x: hidden;
-  transition: background ani("duration") ease;
-  
+  // overflow-x: hidden;
+  transition: background ani("duration")*2 ease;
+  background: $color-background;
+
   &.noscroll {
     overflow: hidden;
   }
 
-  &.desktop {
-    margin-bottom: 0;
-
-  }
-
   &.playing {
     overflow: hidden;
-    background: black;
-    cursor: none;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  body {
+    margin: 0;
+    // overflow: hidden;
   }
 }
 

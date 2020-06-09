@@ -6,10 +6,47 @@ import Navbar from '~components/Navbar';
 import { Helmet } from 'react-helmet';
 
 // Helpers
-import {BreakpointProvider} from '~helpers/Breakpoint';
+import {BreakpointProvider, useBreakpoint} from '~helpers/Breakpoint';
+
+const Header = (props) => {
+  const breakpoints = useBreakpoint();
+
+  return (
+    <header>
+      <Navbar
+        hide={breakpoints.desktop ? props.fullscreen : false}
+        {...props.navBarProps || {}}
+      />
+    </header>
+  )
+}
 
 const Layout = (props) => {
   
+  const header = (
+    <Header
+      fullscreen={props.fullscreen}
+      navBarProps={{
+        logo: '/images/kettulogo.svg',
+        items: [{
+          title: {
+            name: 'home',
+            breakpoints: ['mobile']
+          },
+          icon: {
+            name: 'home',
+            breakpoints: ['desktop']
+          },
+          path: '/'
+        },
+        {
+          title: 'contact',
+          path: '/contact'
+        }]
+      }}
+    />
+  );
+
   return (
     <BreakpointProvider>
       <Helmet>
@@ -21,27 +58,7 @@ const Layout = (props) => {
         <link rel="manifest" href="/site.webmanifest" />
       </Helmet>
 
-      <header>
-        <Navbar
-          logo={'/images/kettulogo.svg'}
-          hide={props.fullScreen}
-          items={[{
-            title: {
-              name: 'home',
-              breakpoints: ['mobile']
-            },
-            icon: {
-              name: 'home',
-              breakpoints: ['desktop']
-            },
-            path: '/'
-          },
-          {
-            title: 'contact',
-            path: '/contact'
-          }]}
-        />
-      </header>
+      { header }
 
       { props.children }
 

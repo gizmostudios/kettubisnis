@@ -17,6 +17,10 @@ $color-icon: palette("icon");
   margin-bottom: spacing(2);
   z-index: zIndex(navbar);
   // @extend .debug;
+  
+  &.show {
+    z-index: zIndex(navbar) + 1;
+  }
 }
 
 .navbar {
@@ -125,7 +129,7 @@ $color-icon: palette("icon");
 
   &.close {
     bottom: 2px;
-    transform: scale(2) translate(-9px, 9px);
+    transform: scale(2) translate(-9px, spacing(-5));
 
     > span:nth-child(1) {
       transform: translate(2px, 1px) rotate(45deg);

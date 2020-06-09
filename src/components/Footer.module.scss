@@ -9,11 +9,12 @@ $color-icon-hover: palette('primary');
 
 $footer-height: calc(100vh - #{size('footer-height')});
 $footer-height-up: calc(-1 * (100vh - #{size('footer-height')}));
-$grid-height: calc(100vh - 80px);
+$grid-height: calc(100vh - #{size('footer-height')});
 
 footer {
   position: fixed;
   left: 0;
+  top: 0;
   top: $footer-height;
   width: 100%;
   height: 100vh;
@@ -41,16 +42,16 @@ footer {
   align-items: flex-start;
   padding: spacing(2);
   border-bottom: solid 1px $color-border;
-  cursor: pointer;
-
-  &:hover .icon {
-    color: $color-icon-hover;
-  }
 }
 
 .icon {
   margin: 0 spacing(1.5);
   color: $color-icon;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-icon-hover;
+  }
 }
 
 .homeIcon {

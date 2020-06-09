@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './Videos.module.scss';
 import cx from 'classnames';
+import { isIOS } from 'react-device-detect';
 
 // components
 import Icon from '~components/Icon';
@@ -17,38 +18,32 @@ const Video = (props) => {
   const [showDescription, setShowDescription] = useState(false);
   const [src, setSrc] = useState(props.src_sd); //@TODO: make SD/HD switch
 
-  // GlobalStore.on('playVideo', (videoId) => {
-  //   console.log(videoId);
-  // });
 
   // constants
   const videoPath = `/videos`;
   const posterPath = `/videos/posters`;
 
-  const handlePlayClick = (newPlayState) => {
-    setPaused(!newPlayState || !paused);
-    props.onPlay(props.index);
-  }
+  useEffect(() => {
+    setPaused(!props.play);
+    if(!props.play) {
+      vidRef.current.pause();
+    }
+    return () => {};
+  }, [props.play]);
 
-  const handleVideoClick = () => {
-    setPaused(!paused);
+  useEffect(() => {
+    vidRef.current.addEventListener('pause', pauseVideo);
+    return () => vidRef.current.removeEventListener('pause', pauseVideo);
+  }, [paused]);
+
+  const pauseVideo = () => {
+    if (vidRef.current.seeking) return;
+    setPaused(true);
     props.onPause(props.index);
   }
 
-  useEffect(() => {
-    vidRef.current[paused ? 'pause' : 'play']();
 
-    if(!paused && breakpoints.mobile) {
-      try {
-        vidRef.current.requestFullscreen();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    
-    return () => {}
-  }, [paused]);
-  
+
   return (
     <div
       className={cx(
@@ -70,9 +65,9 @@ const Video = (props) => {
           }
           controls={props.controls || false}
           preload={props.preload || 'none'}
-          onClick={() => handleVideoClick()}
           poster={`${posterPath}/${props.poster}`}
           ref={vidRef}
+          controls={!paused || isIOS}
           >
           <source src={`${videoPath}/${src}`} type={props.type || 'video/mp4'} />
           Sorry, your browser doesn't support the video tag.
@@ -81,37 +76,53 @@ const Video = (props) => {
         {paused && (
           <>
             <div
-              onClick={() => handlePlayClick(true)}
-              className={styles.playButton}
+              className={cx(
+                styles.playButton,
+                If(breakpoints.mobile, styles.mobile)
+              )}
+              onClick={() => {
+                setPaused(false);
+                props.onPlay(props.index);
+                vidRef.current.play();
+              }}
               >
               <Icon name='play' />
             </div>
 
             <div
-              onClick={() => handlePlayClick(true)}
               className={styles.backdrop}
-              />
+              onClick={() => {
+                setPaused(false);
+                props.onPlay(props.index);
+                vidRef.current.play();
+              }}
+            />
           </>
         )}
       </div>
 
       {(paused || breakpoints.mobile) && (
         <div
-          className={ cx(styles.info, breakpoints.desktop && styles.desktop) }
+          className={cx(
+            styles.info,
+            If(breakpoints.desktop, styles.desktop)
+          )}
           onClick={() => setShowDescription(!showDescription)}
         >
           <h3 className={ styles.infoTitle }>
             <span>{props.title}</span>
-
+            
             {breakpoints.desktop && (
               <Icon
-              name="info"
+                name="info"
               />
-              )}
+            )}
           </h3>
-          
+
+          <span className={ styles.subtitle }>{props.subtitle}</span>
+
           <p
-            className={ cx(styles.description, showDescription && styles.open) }
+            className={ cx(styles.description, If(showDescription, styles.open)) }
             >
             {props.description}
           </p>
@@ -126,6 +137,7 @@ const Videos = (props) => {
   const VideosRef = useRef();
   const breakpoints = useBreakpoint();
   const [currentVideoId, setCurrentVideoId] = useState(props.currentVideoId);
+  const [initialized, setInitialized] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoLength = props.videoData.videos.length;
 
@@ -137,12 +149,20 @@ const Videos = (props) => {
   }
 
   useEffect(() => {
-    document.getElementById(`video-${currentVideoId}`).scrollIntoView({
-      behavior: 'smooth'
-    });
+    if(currentVideoId) {
+
+      if(!initialized) { // don't smoothscroll on page init
+        setInitialized(true);
+        return;
+      }
+
+      document.getElementById(`video-${currentVideoId}`).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
 
     return () => {};
-  }, [currentVideoId]);
+  }, [currentVideoId, isPlaying]);
   
   useEffect(() => {
     setCurrentVideoId(props.currentVideoId);
@@ -175,6 +195,7 @@ const Videos = (props) => {
                   setCurrentVideoId(videoId);
                   props.onPause(videoId);
                 }}
+                play={index + 1 === currentVideoId && isPlaying}
                 {...videoData}
               />
             )

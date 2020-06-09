@@ -55,6 +55,7 @@
     top: 0;
     left: 0;
     background: palette('overlay');
+    transition: background ani(duration)*2 ease;
     z-index: 2;
   }
 }

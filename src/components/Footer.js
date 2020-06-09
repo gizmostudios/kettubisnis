@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Footer.module.scss'
+import cx from 'classnames';
 
 // Components
 import Icon from '~components/Icon';
@@ -42,6 +43,7 @@ const Footer = (props) => {
 
   const [showGrid, setShowGrid] = useState(false);
   const [showHome, setShowHome] = useState(false);
+  const breakpoints = useBreakpoint();
 
   const handleHomeClick = () => {
     window.scroll({
@@ -80,18 +82,18 @@ const Footer = (props) => {
   }, [showGrid])
 
   return (
-    <footer className={`
-      ${styles.footer}
-      ${If(showGrid, styles.showGrid)}
-      ${If(props.hide, styles.hide)}
-    `}>
+    <footer className={cx(
+      styles.footer,
+      If(showGrid, styles.showGrid),
+      If(props.hide && breakpoints.desktop, styles.hide)
+    )}>
       <header
         className={ styles.header }
-        onClick={() => setShowGrid(!showGrid)}
       >
         <Icon
           name={showGrid ? 'close' : 'grid'}
-          className={ styles.icon } 
+          className={ styles.icon }
+          onClick={() => setShowGrid(!showGrid)}
         />
 
         {!showGrid && showHome && (

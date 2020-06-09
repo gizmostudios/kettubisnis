@@ -3,6 +3,7 @@ import Layout from '~components/Layout';
 import Videos from '~components/Videos';
 import Footer from '~components/Footer';
 
+// data
 import videoData from '~data/videoData.json';
 
 const Home = () => {
@@ -12,7 +13,7 @@ const Home = () => {
 
   return (
     <Layout
-      fullScreen={isPlaying}
+      fullscreen={isPlaying}
     >
       <Videos
         videoData={videoData}
@@ -20,11 +21,11 @@ const Home = () => {
         onPlay={(currentVideoId) => {
           setCurrentVideoId(currentVideoId);
           setIsPlaying(true);
-          document.body.classList.add('noscroll', 'playing');
+          document.body.classList.add('playing');
         }}
         onPause={() => {
           setIsPlaying(false);
-          document.body.classList.remove('noscroll', 'playing');
+          document.body.classList.remove('playing');
         }}
       />
       <Footer

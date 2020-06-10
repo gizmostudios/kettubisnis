@@ -42,6 +42,7 @@ body {
   transition: background ani("duration")*2 ease;
   background: $color-background;
 
+
   &.noscroll {
     overflow: hidden;
   }
@@ -54,7 +55,7 @@ body {
 @media screen and (min-width: 640px) {
   body {
     margin: 0;
-    // overflow: hidden;
+    overflow: hidden;
   }
 }
 
@@ -66,5 +67,5 @@ a,button,h1,h2,h3,h4,h5,h6 {
 
 p {
   letter-spacing: 2px;
-  max-width: size('min-width');
+  max-width: 75vw;
 }

@@ -42,8 +42,6 @@ const Video = (props) => {
     props.onPause(props.index);
   }
 
-
-
   return (
     <div
       className={cx(
@@ -78,7 +76,8 @@ const Video = (props) => {
             <div
               className={cx(
                 styles.playButton,
-                If(breakpoints.mobile, styles.mobile)
+                If(breakpoints.mobile, styles.mobile),
+                If(isIOS, styles.ios)
               )}
               onClick={() => {
                 setPaused(false);
@@ -112,11 +111,10 @@ const Video = (props) => {
           <h3 className={ styles.infoTitle }>
             <span>{props.title}</span>
             
-            {breakpoints.desktop && (
-              <Icon
-                name="info"
-              />
-            )}
+            {/* {breakpoints.desktop && ( */}
+            <Icon
+              name="info"
+            />
           </h3>
 
           <span className={ styles.subtitle }>{props.subtitle}</span>

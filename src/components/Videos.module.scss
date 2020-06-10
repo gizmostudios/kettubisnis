@@ -97,6 +97,10 @@ $color-shadow: palette("shadow");
     width: spacing(7);
     height: spacing(7);
   }
+
+  &.ios {
+    display: none;
+  }
 }
 
 .prevButton, .nextButton {
@@ -180,7 +184,7 @@ $color-shadow: palette("shadow");
     color: palette("text");
   }
 
-  &.desktop {
+  // &.desktop {
     .description {
       transition: max-height ani("duration") ease-in-out, margin-top ani("duration") ease-in-out;
       max-height: 0;
@@ -193,5 +197,5 @@ $color-shadow: palette("shadow");
         max-height: 500px;
       }
     }
-  }
+  // }
 }

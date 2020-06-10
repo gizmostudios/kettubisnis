@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Footer.module.scss'
 import cx from 'classnames';
+import { isIOS } from 'react-device-detect';
 
 // Components
 import Icon from '~components/Icon';
@@ -85,8 +86,10 @@ const Footer = (props) => {
     <footer className={cx(
       styles.footer,
       If(showGrid, styles.showGrid),
-      If(props.hide && breakpoints.desktop, styles.hide)
-    )}>
+      If(props.hide && breakpoints.desktop, styles.hide),
+      If(isIOS, styles.ios),
+    )}
+    >
       <header
         className={ styles.header }
       >
@@ -105,21 +108,22 @@ const Footer = (props) => {
         )}
       </header>
 
-      <div className={styles.grid}>
-        {showGrid && (
-          <>
-            {props.videoData.videos.map((videoData, index) => {
-              return (
-                <Thumbnail
-                  key={index}
-                  index={index + 1}
-                  onClick={(videoId) => handleVideoClick(videoId)}
-                  {...videoData}
-                />
-              )
-            })}
-          </>
-        )}
+      <div className={cx(
+        styles.grid,
+        If(showGrid, styles.show)
+      )}>
+        <>
+          {props.videoData.videos.map((videoData, index) => {
+            return (
+              <Thumbnail
+                key={index}
+                index={index + 1}
+                onClick={(videoId) => handleVideoClick(videoId)}
+                {...videoData}
+              />
+            )
+          })}
+        </>
       </div>
     </footer>
   )

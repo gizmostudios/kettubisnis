@@ -56,6 +56,11 @@ const Layout = (props) => {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta property="og:image" content="/images/sm-poster.jpg" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.kettubisnis.com" />
+        <meta property="og:title" content="Kettu Bisnis" />
+        <meta property="og:description" content="I’m Loviisa Mellin, audio visual professional living in Amsterdam. I've been freelancing in the creative industry since 2006 and my main focus and expertise is video editing and production of video content. I’m primarily editing TV commercials, mood films, brand films and diverse audio visual content." />
       </Helmet>
 
       { header }

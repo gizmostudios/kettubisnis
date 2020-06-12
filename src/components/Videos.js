@@ -51,7 +51,10 @@ const Video = (props) => {
       id={props.id || false}
     >
       <div
-        className={cx(styles.player, breakpoints.desktop && styles.desktop)}
+        className={cx(
+          styles.player,
+          If(breakpoints.desktop, styles.desktop)
+        )}
         >
         <video
           className={

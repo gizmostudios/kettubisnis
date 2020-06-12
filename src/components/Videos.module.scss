@@ -11,9 +11,8 @@ $color-shadow: palette("shadow");
   &.desktop {
     display: flex;
     align-items: center;
-    // width: calc(100vw - #{spacing(2)});
     width: 100vw;
-    height: calc(100vh - 170px);
+    height: calc(100vh - (#{size('nav-height')} + #{size('footer-height')} ));
     overflow-y: hidden;
     overflow-x: auto;
     margin: 0;
@@ -21,9 +20,8 @@ $color-shadow: palette("shadow");
     transition: height ani(duration) ease, transform ani(duration) ease;
 
     &.fullscreen {
-      height: 100vh;
-      transform: translate(0, -80px);
-      // margin-top: spacing(-2);
+      height: 100%;
+      // transform: translate(0, calc(-1 * #{size('nav-height')}));
       overflow: hidden;
     }
     // @extend .debug;
@@ -31,43 +29,67 @@ $color-shadow: palette("shadow");
 }
 
 .root {
+  position: relative;
+  height: 100%;
+
   &:first-child {
     opacity: 0;
     animation: fadeIn ani(duration) ease-out forwards;
+    margin-top: spacing(2);
   }
-  position: relative;
+
+  &:last-child {
+    margin-bottom: size('footer-height');
+  }
 
   &.desktop {
     display: flex;
     align-items: center;
-    max-height: calc(100vh - #{spacing(13)});
+    // max-height: calc(100vh - #{spacing(13)});
     scroll-snap-align: start;
     transition: max-height ani("duration") ease;
 
-    &.fullscreen {
-      max-width: none;
-      max-height: 100vh;
+    &:first-child, &:last-child {
+      margin: 0;
     }
   }
 }
 
 .player {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  &.desktop {
+    margin: 0 spacing(2);
+    width: calc(100vw - #{spacing(4)});
+    height: calc(100% - #{spacing(4)});
+  }
+  // @include debug();
 }
 
 .Video {
+  display: block;
   flex: none;
-  width: 100%;
   transition: height ani("duration") ease;
+  max-width: 100%;
+
+  // @include debug(blue);
 
   &.desktop {
-    width: calc(100vw - #{spacing(4)});
-    margin: 0 spacing(2);
+    max-width: none;
+    min-width: 100vw;
+    min-height: 100%;
+    // padding: 0 spacing(2);
 
     &.fullscreen {
-      margin: spacing(1);
-      width: calc(100vw - #{spacing(2)});
-      height: calc(100vh - #{spacing(2)});
+      min-width: 0;
+      width: calc(100vw - #{spacing(4)});
+      max-height: calc(100vh - #{spacing(4)});
+      background: black;
+      // height: calc(100vh - #{spacing(2)});
     }
   }
 
@@ -135,6 +157,7 @@ $color-shadow: palette("shadow");
   overflow: hidden;
   padding: spacing(2);
   z-index: zIndex('navbar') + 1;
+  cursor: pointer;
 
   &.desktop {
     position: absolute;
@@ -142,20 +165,19 @@ $color-shadow: palette("shadow");
     right: 0;
     margin: spacing(4) spacing(2);
     padding: spacing(2);
-    width: size('min-width');
+    width: size('block-width');
     background: $color-background;
     -moz-user-select: none;
     -webkit-user-select: none;
-    cursor: pointer;
     box-shadow: spacing(1) 0 0 $color-shadow;
+  }
 
-    &:hover {
-      svg {
-        background: $color-hover;
-        border-radius: 99em;
-        path {
-          fill: $color-icon;
-        }
+  &:hover {
+    svg {
+      background: $color-hover;
+      border-radius: 99em;
+      path {
+        fill: $color-icon;
       }
     }
   }

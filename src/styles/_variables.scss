@@ -22,8 +22,9 @@
 @function size($name) {
   $sizes: (
     "nav-height": spacing(6),
-    "footer-height": spacing(7),
-    "min-width": 360px
+    "footer-height": spacing(6),
+    "min-width": 320px,
+    "block-width": 320px,
   );
   @return map-get($sizes, $name);
 }
@@ -40,6 +41,10 @@
     "duration": .5s
   );
   @return map-get($params, $param);
+}
+
+@mixin debug($color: red) {
+  border: solid 1px $color;
 }
 
 .debug {

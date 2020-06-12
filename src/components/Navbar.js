@@ -77,7 +77,10 @@ const Navbar = (props) => {
           className={cx(styles.brand, breakpoints['mobile'] ? styles.center : null)}
           to={'/'}
         >
-          <img src={props.logo} className={styles.logo} />
+          <img src={props.logo} className={cx(
+            styles.logo,
+            If(breakpoints.desktop, styles.desktop)
+          )} />
         </Link>
 
         {breakpoints['mobile'] && (

@@ -9,19 +9,20 @@
   text-align: left;
   margin: spacing(2) auto;
   display: block;
-  width: size(min-width);
+  max-width: size('block-width');
 }
 
 .text {
   @extend .animate;
   display: block;
   margin: 0 auto;
-  text-align: left;
+  text-align: left
 }
 
 .portret {
   max-height: calc(100vh - 140px);
   max-width: 100%;
+  // max-width: size('block-width');
   display: block;
   margin: 0 auto;
 
@@ -29,12 +30,16 @@
 }
 
 .buttons {
-  width: size(min-width);
-  max-width: calc(100vw - #{spacing(4)});
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: spacing(2) auto;
 }
 
 .button {
+  min-width: size(block-width);
   opacity: 0;
   @extend .animate;
 }

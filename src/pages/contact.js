@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+
+// Components
 import Layout from '~components/Layout';
 import Container from '~components/Container';
 import {Columns, Column} from '~components/Columns';
 import Button from '~components/Button';
+import Text from '~components/Text';
+
+// Styles
 import styles from './contact.module.scss';
-import Spacer from '~components/Spacer';
 
 const Contact = () => {
-
   const [callLabel, setCallLabel] = useState('Call me');
   const [mailLabel, setMailLabel] = useState('Mail me');
 
@@ -20,7 +23,8 @@ const Contact = () => {
         <Columns>
           <Column align="center">
             <h1 className={ styles.title }>ABOUT LOVIISA</h1>
-            <p className={ styles.text }>
+            
+            <Text className={styles.text}>
               Hi,
               <br /><br />
               I’m Loviisa Mellin, audio visual professional living in Amsterdam. I've been freelancing in the creative industry since 2006 and my main focus and expertise is video editing and production of video content. I’m primarily editing TV commercials, mood films, brand films and diverse audio visual content. 
@@ -33,8 +37,8 @@ const Contact = () => {
               Best regards,
               <br /><br />
               Loviisa
-            </p>
-          
+            </Text>
+
             <div className={ styles.buttons }>
               <Button
                 className={ styles.button }

@@ -14,10 +14,10 @@ $color-icon: palette("icon");
 
 .root {
   position: relative;
-  margin-bottom: spacing(2);
   z-index: zIndex(navbar);
+  // margin-bottom: spacing(2);
   // @extend .debug;
-  
+
   &.show {
     z-index: zIndex(navbar) + 1;
   }
@@ -30,24 +30,23 @@ $color-icon: palette("icon");
   display: flex;
   align-items: center;
   justify-content: space-between;
-  // transition: height ani("duration") ease, padding ani("duration") ease;
-  transition: transform ani(duration) ease, background ani(duration)*2 ease;
+  transition: margin-top ani(duration) ease, background ani(duration)*2 ease;
   background: $color-background;
 
   &.hide {
     overflow: hidden;
-    // height: 0;
-    // padding-top: 0;
-    // padding-bottom: 0;
     border: none;
-    transform: translate(0, -100%);
+    margin-top: calc(-1 * #{size(nav-height)})
+
+    // transform: translate(0, -100%);
   }
 }
 
 .brand {
   flex: auto;
   text-align: right;
-  // @extend .debug;
+  max-width: 100vw;
+  overflow: visible;
 
   &.center {
     text-align: center;
@@ -55,8 +54,12 @@ $color-icon: palette("icon");
 }
 
 .logo {
-  max-width: 100%;
+  max-width: calc( #{size('block-width')} - #{spacing(2)} );
   margin-top: -6px;
+  
+  &.desktop {
+    max-width: calc( #{size('block-width')} + #{spacing(4)} );
+  }
 }
 
 .items {
@@ -129,7 +132,7 @@ $color-icon: palette("icon");
 
   &.close {
     bottom: 2px;
-    transform: scale(2) translate(-9px, spacing(-5));
+    transform: scale(2) translate(-9px, spacing(-7));
 
     > span:nth-child(1) {
       transform: translate(2px, 1px) rotate(45deg);
@@ -163,7 +166,7 @@ $color-icon: palette("icon");
   // @extend .debug;
 
   &.show {
-    height: calc(100vh - #{size('nav-height')} - #{spacing(5)});
+    height: calc(100vh - #{size('nav-height')});
     opacity: 1;
   }
 }

@@ -1,83 +1,51 @@
 @import '~styles/_variables';
 @import '~styles/_animations';
 
-$footer-height: size('nav-height');
 $color-border: palette('secondary');
-
 $color-background: palette('background');
 $color-icon: palette('icon');
 $color-icon-hover: palette('primary');
 $color-shadow: palette('shadow');
 
-$footer-height: calc(100vh - #{size('footer-height')});
-$footer-height-up: calc(-1 * (100vh - #{size('footer-height')}));
-$grid-height: calc(100vh - #{spacing(8)});
+// $footer-height: calc(100% - #{size('footer-height')});
+// $footer-height-up: calc(-1 * (100% - #{size('footer-height')}));
+// $grid-height: calc(100% - #{size('footer-height')});
+
+$footer-height: size('footer-height');
+$grid-height: calc(100% - #{$footer-height});
 
 footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
+  height: $footer-height;
   border-top: solid 1px $color-border;
   background: $color-background;
   z-index: zIndex(navbar);
   
   transition:
-    transform ani(duration) ease,
+    height ani(duration) ease,
     background ani(duration)*2 ease,
     box-shadow ani(duration) linear;
-  // transform: translate(0, calc(100% - #{size(footer-height)}));
 
   &.showGrid {
-    transform: translate(0, calc(-100vh + #{spacing(15.5)}));
     z-index: zIndex('navbar') + 1;
-    
-    &:before {
-      content: '';
-      display: block;
-      position: absolute;
-      z-index: zIndex(navbar) - 1;
-      width: 100vw;
-      height: 100vh;
-      background: $color-shadow;
-      transform: translate(0, -100%);
-      animation: fadeIn ani(duration) ease forwards;
-    }
+    height: 100%;
   }
 
   &.hide {
     transform: translate(0, size(footer-height));
   }
-
-  // &.ios {
-  //   width: spacing(7);
-  //   top: auto;
-  //   left: auto;
-  //   bottom: 0;
-  //   right: 0;
-  //   background: none;
-  //   border: none;
-  //   transform: translate(0, 0);
-
-  //   & .header {
-  //     height: spacing(20);
-  //     flex-direction: column;
-  //     align-items: center;
-  //     background: $color-background;
-
-  //     & .icon {
-  //       background: $color-background;
-  //     }
-  //   }
-  // }
 }
 
 .header {
   width: 100%;
+  height: $footer-height;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: spacing(2);
+  align-items: center;
+  // padding: spacing(2);
 }
 
 .icon {
@@ -101,10 +69,9 @@ footer {
 .grid {
   position: absolute;
   max-height: $grid-height;
+  padding: spacing(1);
   display: flex;
   flex-wrap: wrap;
-  padding: spacing(1);
-  padding-bottom: spacing(8);
   overflow-x: hidden;
   overflow-y: auto;
   border-top: solid 1px $color-border;

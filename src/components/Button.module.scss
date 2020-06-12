@@ -9,7 +9,7 @@ $transition-duration: .15s;
 
 .Button {
   display: block;
-  max-width: size('min-width');
+  max-width: size('block-width');
   border: none;
   border-radius: 0;
   padding: spacing(2);

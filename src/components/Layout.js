@@ -14,7 +14,7 @@ const Header = (props) => {
   return (
     <header>
       <Navbar
-        hide={breakpoints.desktop ? props.fullscreen : false}
+        // hide={breakpoints.desktop ? props.fullscreen : false}
         {...props.navBarProps || {}}
       />
     </header>

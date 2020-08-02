@@ -33,7 +33,7 @@ const Home = () => {
         onVideoSelect={(selectedVideoId) => {
           setCurrentVideoId(selectedVideoId);
         }}
-        hide={isPlaying}
+        // hide={isPlaying}
       />
     </Layout>
   )

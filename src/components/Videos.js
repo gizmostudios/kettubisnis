@@ -129,6 +129,14 @@ const Video = (props) => {
           </p>
         </div>
       )}
+
+      {/* {(!paused && breakpoints.desktop) && (
+        <Icon
+          className={styles.closeButton}
+          name="close"
+          onClick={pauseVideo}
+        />
+      )} */}
     </div>
   )
 }
@@ -158,7 +166,9 @@ const Videos = (props) => {
       }
 
       document.getElementById(`video-${currentVideoId}`).scrollIntoView({
-        behavior: 'smooth'
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
       });
     }
 
